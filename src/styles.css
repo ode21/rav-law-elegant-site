@@ -88,7 +88,9 @@
 
 @layer base {
   * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+  ::selection { background: oklch(0.78 0.13 80 / 0.35); color: var(--foreground); }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -127,6 +129,7 @@
     width: max-content;
     animation: marquee 40s linear infinite;
   }
+  .marquee:hover { animation-play-state: paused; }
   @keyframes marquee {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
@@ -142,5 +145,21 @@
     background: var(--gradient-gold);
     transition: width 0.4s ease;
   }
-  .gold-underline:hover::after { width: 100%; }
+  .gold-underline:hover::after,
+  .gold-underline.is-active::after { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .card-lift:hover { transform: none; }
+  .marquee {
+    animation: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 1.5rem;
+    padding-inline: 1.5rem;
+  }
+  .marquee-dup, .marquee-fade { display: none; }
 }
