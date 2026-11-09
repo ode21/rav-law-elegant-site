@@ -60,6 +60,8 @@ ErrorDocument 404 /404.html
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  # Hostinger's Git deploy keeps its build workspace here — never serve it
+  RewriteRule ^\\.builds - [F,L]
   # Force HTTPS and the bare domain
   RewriteCond %{HTTPS} !=on [OR]
   RewriteCond %{HTTP_HOST} ^www\\. [NC]
